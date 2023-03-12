@@ -9,7 +9,10 @@ breads_router.get('/:arrayIndex', (req, res) => {
 
 //Index
 breads_router.get('/', (req, res) => {
-    res.render('index', {bread: Bread})
+    res.render('index', {
+        bread: Bread,
+        title: 'Index Page'
+    })
     //res.send(Bread)
 })
 
