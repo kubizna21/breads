@@ -2,6 +2,11 @@ const express = require('express')
 const breads_router = express.Router()
 const Bread = require('../models/bread.js')
 
+//New
+breads_router.get('/new', (req, res) => {
+    res.render('new')
+})
+
 
 //SHOW
 breads_router.get('/:arrayIndex', (req, res) => {
@@ -17,6 +22,12 @@ breads_router.get('/:arrayIndex', (req, res) => {
    
 })
 
+//Delete
+breads_router.delete('/:arrayIndex', (req, res) => {
+    Bread.splice(req.params.arrayIndex, 1) 
+        res.statusCode(303).redirect('/breads')
+})
+
   
 
 //Index
@@ -28,20 +39,18 @@ breads_router.get('/', (req, res) => {
     //res.send(Bread)
 })
 
+//Create
 breads_router.post('/', (req, res) => {
-    // req.body.hasGluten = req.body.hasGluten === 'on'
+    if (!req.body.image) { // req.body.image === false || req.body.image === ""
+    req.body.image = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPA-mqJhZ7w99TBo6y8l1UgRKbr44KzIf8NQ&usqp=CAU"
+}
 
-    if (req.body.hasGluten === 'on') {
-        req.bodyhasGluten = 'true'
-    } else {
-        req.body.hasGluten = 'false'
-
-    }
-
+    req.body.hasGluten = req.body.hasGluten === 'on'
     Bread.push(req.body)
-    res.send(Bread)
+    //res.send(Bread)
+    res.redirect('/breads')
 
     })
-})
+
 
 module.exports = breads_router
