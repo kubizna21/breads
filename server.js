@@ -1,13 +1,17 @@
 require('dotenv').config()
-
-const express = require('express')
-const app = express()
-
 //Config
 const PORT = process.env.PORT
 console.log(PORT)
 
+const express = require('express')
+const app = express()
+
+//Dependencies
+const methodOverride = require('method-override')
+
+
 //Middleware
+app.use(methodOverride('_method'))
 app.use(express.static('public'))
 app.use(express.urlencoded({extended: true}))
 app.set('views', __dirname + '/views')
